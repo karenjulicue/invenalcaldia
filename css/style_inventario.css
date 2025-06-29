@@ -1,0 +1,111 @@
+/* css/inventaio.css */ 
+
+.header {
+    background: linear-gradient(to right, #F6C900, #E30613);
+    padding: 1rem;
+}
+
+.logo {
+    max-height: 100px;   
+}
+
+.search-box {
+    background-color: white;
+    border-radius: 25px;
+    padding: 0.5rem 1rem;
+}
+
+.dashboard-wrapper {
+    padding: 2rem;
+}
+
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+        
+.card-dashboard {
+    background-color: #E30613;
+    border-radius: 10px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.resaltar-link {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color:rgb(207, 135, 140);
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+       
+.resaltar-link:hover {
+    background-color: #c0040f;
+}
+
+.logout-btn {
+    background-color: #ffffff;
+    color: #E30613;
+    border: 1px solid #E30613;
+    border-radius: 5px;
+    padding: 0.4rem 0.8rem;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.logout-btn:hover {
+    background-color: #E30613;
+     color: white;
+}
+
+/* css/productos.css */
+.container { margin-top: 30px; }
+.table thead th {
+    background: #0286fa;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+}
+
+.table tbody td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+
+.btn-editar {
+    background: #ff6600;
+    color: #fff;
+    font-weight: bold;
+}
+
+.btn-editar:hover {
+    background: #e65c00;
+    color: #fff;
+}
+     
+.btn-eliminar {
+    background: #e53935;
+    color: #fff;
+    font-weight: bold;
+}
+     
+.btn-eliminar:hover {
+    background: #b71c1c;
+    color: #fff;
+}
+       
+.form-section {
+    background: #f4f8fb;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
