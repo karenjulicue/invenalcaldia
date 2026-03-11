@@ -5,7 +5,7 @@ if (isset($_GET['eliminar'])) {
     $id = intval($_GET['eliminar']);
     $stmt = $conn->prepare("DELETE FROM equipos_red WHERE id = ?");
     $stmt->execute([$id]);
-    header('Location: ../views/equipos_telefonia.php');
+    header('Location: ../views/equipos_red.php');
     exit();
 }
 

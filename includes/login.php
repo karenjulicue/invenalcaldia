@@ -1,16 +1,21 @@
 <?php
 session_start();
 
-// Verificar si el usuario ya ha iniciado sesión
-if(isset($_SESSION['user_id'])) {
-    header("Location: ../views/admin.php");
+if (isset($_SESSION['nombre'])) {
+    // Si ya hay sesión, redirige a la página principal correspondiente
+    if ($_SESSION['tipo'] == 'admin') {
+        header("Location: ../views/admin.php");
+    } else {
+        header("Location: ../views/usuario.php");                                               
+    }
     exit();
-}
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
 
 // Marcar si hay cookies para recordarme
 if(isset($_COOKIE['remember_token'])) {
     require_once '../config/database.php';
-    
+
+
     try {
         $stmt = $conn->prepare("SELECT id, username, role, remember_token, token_expires FROM usuarios WHERE remember_token IS NOT NULL AND token_expires > NOW()");
         $stmt->execute();
@@ -25,7 +30,7 @@ if(isset($_COOKIE['remember_token'])) {
                 
                // Regenerar token por seguridad
                 $newToken = bin2hex(random_bytes(32));
-                $tokenHash = password_hash($newToken, PASSWORD_DEFAULT);
+                $tokenHash = password_hash($newToken, PASSWORD_DEFAULT);                     
                 $expires = time() + (30 * 24 * 60 * 60); // 30 days
                 
                 $stmt = $conn->prepare("UPDATE usuarios SET remember_token = ?, token_expires = ? WHERE id = ?");

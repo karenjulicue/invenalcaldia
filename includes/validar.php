@@ -19,7 +19,7 @@ if(isset($_POST['login'])) {
         // Verificar si el usuario existe en la base de datos
         $stmt = $conn->prepare("SELECT id, username, password, role FROM usuarios WHERE username = ? AND role = ?");
         $stmt->execute([$username, $role]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);                                     
         
         if($user && $password === $user['password']) {
             // Inicio de sesión exitoso
@@ -50,8 +50,6 @@ if(isset($_POST['login'])) {
             // Redirigir según el rol
             if($user['role'] == 'administrador') {
                 header('Location: ../views/admin.php');
-            } else if($user['role'] == 'supervisor') {
-                header('Location: ../views/supervisor.php');
             } else if($user['role'] == 'usuario') {
                 header('Location: ../views/usuario.php');
             }
@@ -75,52 +73,46 @@ if(isset($_POST['login'])) {
 
 if(isset($_POST['registrar'])){
 
-    if(strlen($_POST['nombre']) >=1 && strlen($_POST['correo'])  >=1 
-    && strlen($_POST['password'])  >=1 && strlen($_POST['rol']) >= 1 ){
+    if(strlen($_POST['username']) >=1  && strlen($_POST['password'])  >=1 && strlen($_POST['role']) >= 1 ){
 
-    $nombre = trim($_POST['nombre']);
-    $apellido = trim($_POST['apellido']);
-    $correo = trim($_POST['correo']);
+    $username = trim($_POST['username']);
     $password = trim($_POST['password']);
-    $rol = trim($_POST['rol']); 
-
-    $consulta= "INSERT INTO user (nombre, apellido, correo, password, rol)
-    VALUES ('$nombre', '$apellido', '$correo','$password', '$rol' )";
-
-    mysqli_query($conexion, $consulta);
-    mysqli_close($conexion);
-
+    $role = trim($_POST['role']); 
+    
+    // Usar consulta preparada con PDO
+    $consulta = "INSERT INTO usuarios (username, password, role) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($consulta);
+    $stmt->execute([$username, $password, $role]);
     header('Location: ../views/admin.php'); 
   }
 }
 
-
 ?>
 
 
+
 <?php
-session_start();
 require_once '../config/database.php';
 
 if(isset($_POST['mostrar'])){
 
-    if(strlen($_POST['nombre']) >=1 && strlen($_POST['descripcion'])  >=1 && strlen($_POST['estado'])  >=1 && strlen($_POST['marca'])  >=1 
-    && strlen($_POST['fecha_creacion'])  >=1 && strlen($_POST['fecha_actualizacion']) >= 1 ){
+    if(strlen($_POST['username']) >=1 && strlen($_POST['apellido'])  >=1 && strlen($_POST['direccion'])  >=1 && strlen($_POST['correo'])  >=1 
+    && strlen($_POST['contraseña'])  >=1 && strlen($_POST['role']) >= 1 ){
 
-    $nombre = trim($_POST['nombre']);
-    $descripcion = trim($_POST['descripcion']);
-    $estado = trim($_POST['estado']);
-    $estado = trim($_POST['marca']);
-    $fecha_creacion = trim($_POST['fecha_creacion']);
-    $fecha_actualizacion = trim($_POST['fecha_actualizacion']);
+    $nombre = trim($_POST['username']);
+    $descripcion = trim($_POST['apellido']);
+    $estado = trim($_POST['direccion']);
+    $estado = trim($_POST['correo']);
+    $fecha_creacion = trim($_POST['contraseña']);
+    $fecha_actualizacion = trim($_POST['role']);
 
-    $consulta= "INSERT INTO insumos (nombre, descripcion, estado, marca, fecha_creacion, fecha actualizacion)
-    VALUES ('$nombre', '$descripcion', '$estado', '$marca', '$fecha_creacion', '$fecha_actualizacion')";
+    $consulta= "INSERT INTO lista_usuarios (username, apellido, direccion, correo, contraseña, rol)
+    VALUES ('$username', '$apellido', '$dirreccion', '$correo', '$contraseña', '$role')";
 
-    mysqli_query($conexion, $consulta);
-    mysqli_close($conexion);
+    mysqli_query($conn, $consulta);
+    mysqli_close($conn);
 
-    header('Location: ../views/agregar_equipo.php');
+    header('Location: ../views/admin.php');
   }
 }
 ?>
